@@ -4,15 +4,14 @@ class Node
 
   @@instance_collector = []
 
-  def initialize(value, parent_node = nil, child_node = [nil, nil], dup = 0)
+  def initialize(value, parent = nil, child = [nil, nil], dup = 0)
     @value = value
-    @parent  = parent_node
-    @child = child_node
+    @parent  = parent
+    @child = child
     @dup = 0
   end
 
 end
-
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree = []
@@ -45,5 +44,26 @@ tree.each { |node|
   puts "parent: #{node.parent}"
   puts "child: #{node.child}"
 }
+
+
+breadth_first_search(67, tree)
+
+def breadth_first_search(goal , tree)
+
+  found = nil
+  current = tree.first
+  queue = [current]
+
+  loop do
+    break if found || queue == []
+    queue << current.child[0] if current.child[0] != nil
+    queue << current.child[0] if current.child[0] != nil
+
+    current = tree.select { |node| node.value == queue.shift }
+    found = tree.index(current.value) if current.value == goal
+  end
+
+
+
 
 
