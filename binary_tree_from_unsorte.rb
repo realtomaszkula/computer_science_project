@@ -46,26 +46,46 @@ end
 # }
 
 def breadth_first_search(goal , tree)
-  found = false
+
+  queue = []
+  visited = [tree.first]
   current = tree.first
-  queue = [current.value]
+  found = nil
 
   loop do
-    break if found != false || queue.size == 0
-    if current.value == goal
-      node = tree.select { |node| node.value == current.value }.first
-      found = tree.index(node)
-    end
-    queue << tree.select { |node| node.value == current.child[0] }.map { |x| x.value }.first if current.child[0] != nil
-    queue << tree.select { |node| node.value == current.child[1] }.map { |x| x.value }.first if current.child[1] != nil
 
-    p queue
-    first_in_line = queue.shift
-    current = tree.select { |node| node.value == first_in_line }.first
+    if current.value == goal
+      found = true
+      break
+    end
+    if visited.size == tree.size
+      found = false
+      break
+    end
+
+    if current.child[0] != nil
+        if current.child[0] == goal then found = true; break; end
+      temp_current = select_from_tree(current.child[0], tree)
+      visited << temp_current unless visited.include?(temp_current)
+      queue << temp_current unless queue.include?(temp_current)
+    end
+    if current.child[1] != nil
+        if current.child[1] == goal then found = true; break; end
+      temp_current = select_from_tree(current.child[1], tree)
+      visited << temp_current unless visited.include?(temp_current)
+      queue << temp_current unless queue.include?(temp_current)
+    end
+    current = queue.shift
   end
-  found
+found
 end
 
-x = breadth_first_search(67, tree)
+def select_from_tree(what, tree)
+  tree.select { |node| node.value == what }.first
+end
 
-puts x
+
+
+
+
+puts breadth_first_search(55, tree)
