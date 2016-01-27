@@ -55,7 +55,7 @@ def breadth_first_search(goal , tree)
   loop do
 
     if current.value == goal
-      found = true
+      found = winning_index(current.value, tree)
       break
     end
     if visited.size == tree.size
@@ -64,13 +64,19 @@ def breadth_first_search(goal , tree)
     end
 
     if current.child[0] != nil
-        if current.child[0] == goal then found = true; break; end
+        if current.child[0] == goal
+          found = winning_index(current.child[0], tree)
+          break
+        end
       temp_current = select_from_tree(current.child[0], tree)
       visited << temp_current unless visited.include?(temp_current)
       queue << temp_current unless queue.include?(temp_current)
     end
     if current.child[1] != nil
-        if current.child[1] == goal then found = true; break; end
+        if current.child[1] == goal
+          found = winning_index(current.child[1], tree)
+          break
+        end
       temp_current = select_from_tree(current.child[1], tree)
       visited << temp_current unless visited.include?(temp_current)
       queue << temp_current unless queue.include?(temp_current)
@@ -84,8 +90,10 @@ def select_from_tree(what, tree)
   tree.select { |node| node.value == what }.first
 end
 
+def winning_index(value, tree)
+  node = select_from_tree(value, tree)
+  tree.index(node)
+end
 
 
-
-
-puts breadth_first_search(55, tree)
+puts breadth_first_search(6345, tree)
