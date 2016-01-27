@@ -15,5 +15,4 @@ class Node
   def self.offspring
     @@instance_collector
   end
-
 end
