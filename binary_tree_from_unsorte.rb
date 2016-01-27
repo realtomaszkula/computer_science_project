@@ -18,25 +18,20 @@ arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree = []
 
 while arr.length > 1
-  new_value = arr.shift
-  new_node = Node.new(new_value)
-
-  p new_value
+  new_node = Node.new(arr.shift)
   dup = false
 
   for i in 0..(tree.length - 1)
     if tree[i].value == new_node.value
       tree[i].dup += 1
       dup = true
-    elsif tree[i].value < new_value && tree[i].child[1] == nil
+    elsif tree[i].value < new_node.value && tree[i].child[1] == nil
       tree[i].child[1] = new_node.value
       new_node.parent = tree[i].value
-    elsif tree[i].value < new_value && tree[i].child[1] != nil
-      next
-    elsif tree[i].value > new_value && tree[i].child[0] == nil
+    elsif tree[i].value > new_node.value && tree[i].child[0] == nil
       tree[i].child[0] = new_node.value
       new_node.parent = tree[i].value
-    elsif tree[i].value > new_value && tree[i].child[0] == nil
+    else
       next
     end
   end
@@ -44,7 +39,7 @@ while arr.length > 1
   tree << new_node unless dup
 end
 
-puts tree.each { |node|
+tree.each { |node|
   puts "value: #{node.value}"
   puts "dup: #{node.dup}"
   puts "parent: #{node.parent}"
