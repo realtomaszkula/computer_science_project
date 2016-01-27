@@ -51,18 +51,21 @@ def breadth_first_search(goal , tree)
   queue = [current.value]
 
   loop do
-    break if found || queue == []
-    found = tree.index(current.value) if current.value == goal
-
+    break if found != false || queue.size == 0
+    if current.value == goal
+      node = tree.select { |node| node.value == current.value }.first
+      found = tree.index(node)
+    end
     queue << tree.select { |node| node.value == current.child[0] }.map { |x| x.value }.first if current.child[0] != nil
     queue << tree.select { |node| node.value == current.child[1] }.map { |x| x.value }.first if current.child[1] != nil
 
+    p queue
     first_in_line = queue.shift
     current = tree.select { |node| node.value == first_in_line }.first
   end
   found
 end
 
-x = breadth_first_search(23, tree)
+x = breadth_first_search(67, tree)
 
 puts x
