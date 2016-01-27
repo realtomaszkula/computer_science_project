@@ -38,15 +38,12 @@ while arr.length > 1
   tree << new_node unless dup
 end
 
-tree.each { |node|
-  puts "value: #{node.value}"
-  puts "dup: #{node.dup}"
-  puts "parent: #{node.parent}"
-  puts "child: #{node.child}"
-}
-
-
-breadth_first_search(67, tree)
+# tree.each { |node|
+#   puts "value: #{node.value}"
+#   puts "dup: #{node.dup}"
+#   puts "parent: #{node.parent}"
+#   puts "child: #{node.child}"
+# }
 
 def breadth_first_search(goal , tree)
 
@@ -57,13 +54,13 @@ def breadth_first_search(goal , tree)
   loop do
     break if found || queue == []
     queue << current.child[0] if current.child[0] != nil
-    queue << current.child[0] if current.child[0] != nil
+    queue << current.child[1] if current.child[1] != nil
 
-    current = tree.select { |node| node.value == queue.shift }
+    current = tree.select { |node| node.value == queue.shift }.first
     found = tree.index(current.value) if current.value == goal
   end
+end
 
-
-
+breadth_first_search(67, tree)
 
 
