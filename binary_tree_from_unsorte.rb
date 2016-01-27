@@ -16,7 +16,7 @@ end
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree = []
 
-while arr.length > 1
+while arr.length > 0
   new_node = Node.new(arr.shift)
   dup = false
 
@@ -96,4 +96,4 @@ def winning_index(value, tree)
 end
 
 
-puts breadth_first_search(6345, tree)
+puts breadth_first_search(324, tree)
