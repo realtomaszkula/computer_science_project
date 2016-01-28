@@ -18,13 +18,13 @@ class Node
   def self.build_tree(arr)
     while arr.length > 0
       new_node = Node.new(arr.shift)
+
       dup = false
+      @@tree.each { |node| dup = true if node.value == new_node.value }
+      next if dup
 
       for i in 0..(@@tree.length - 1)
-        if @@tree[i].value == new_node.value
-          @@tree[i].dup += 1
-          dup = true
-        elsif @@tree[i].value < new_node.value && @@tree[i].child[1] == nil
+        if @@tree[i].value < new_node.value && @@tree[i].child[1] == nil
           @@tree[i].child[1] = new_node.value
           new_node.parent = @@tree[i].value
         elsif @@tree[i].value > new_node.value && @@tree[i].child[0] == nil
@@ -34,7 +34,7 @@ class Node
           next
         end
       end
-    @@tree << new_node unless dup
+      @@tree << new_node
     end
   end
 end
