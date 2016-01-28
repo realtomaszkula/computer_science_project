@@ -5,6 +5,8 @@ def depth_first_search(goal, tree)
 current = tree.first
 stack = [tree.first]
 visited = [tree.first]
+found = false
+
 
 loop do
     break if visited.size == tree.size
@@ -13,38 +15,37 @@ loop do
       found = winning_index(current.value, tree)
       break
     end
-    p stack
-
 
     child_l = select_from_tree(current.child[0], tree)
     child_r = select_from_tree(current.child[1], tree)
 
     ## visiting and queuing the left node first
-    if child_l.value != nil && !visited.include?(child_l)
+    if child_l != nil && !visited.include?(child_l)
       if child_l.value == goal
           found = winning_index(child_l.value, tree)
           break
       end
       current = child_l
-      visited << current   unless visited.include?(current)
+      visited << current
       stack   << current   unless stack.include?(current)
 
-    elsif child_r.value != nil && !visited.include?(child_r)
+    ## if you can't go left, try right
+    elsif child_r != nil && !visited.include?(child_r)
       if  child_r.value == goal
           found = winning_index(child_r.value, tree)
           break
       end
       current = child_r
-      visited << current   unless visited.include?(current)
+      visited << current
       stack   << current   unless stack.include?(current)
+    ## running into the dead end we go back
     else
       current = stack.pop
-
     end
 
-    ## running into the dead end we go back
 
   end
+  found
 end
 
 def select_from_tree(what, tree)
@@ -52,6 +53,7 @@ def select_from_tree(what, tree)
 end
 
 def winning_index(value, tree)
+  node = select_from_tree(value, tree)
   tree.index(node)
 end
 
@@ -60,4 +62,4 @@ end
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 Node.build_tree(arr)
 tree = Node.tree
-puts depth_first_search(23, tree)
+p depth_first_search(324, tree)
