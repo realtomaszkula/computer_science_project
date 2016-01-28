@@ -2,7 +2,6 @@ require_relative './binary_tree_from_unsorted.rb'
 
 def depth_first_search(goal, tree, current = tree.first, visited = [tree.first] )
 
-    p current
     return false if visited.size == tree.size
 
     if current.value == goal
@@ -36,7 +35,7 @@ def depth_first_search(goal, tree, current = tree.first, visited = [tree.first] 
       depth_first_search( goal, tree, current, visited )
     ## running into the dead end we go back
     else
-      return
+      return false
     end
 
 end
@@ -57,10 +56,12 @@ arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 Node.build_tree(arr)
 tree = Node.tree
 
-tree.each { |node|
-  puts "\t\tvalue: #{node.value}"
-  puts "dup: #{node.dup}"
-  puts "parent: #{node.parent}"
-  puts "child: #{node.child}"
-}
-# p depth_first_search(324, tree)
+# tree.each { |node|
+#   puts "\t\tvalue: #{node.value}"
+#   puts "dup: #{node.dup}"
+#   puts "parent: #{node.parent}"
+#   puts "child: #{node.child}"
+# }
+
+
+p depth_first_search(444, tree)
